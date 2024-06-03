@@ -65,7 +65,8 @@ app.get('/word', (req, res) => {
 // app.get('/home', (req, res) => {
 //     res.render('home')
 // })
-const dataStore = [];
+//const dataStore = [];
+let n ;
 
 app.post('/signup', async (req, res) => {
    const data = {
@@ -104,7 +105,8 @@ app.post('/login', async (req, res) => {
             name: req.body.name,
             password: req.body.password,
         };
-        dataStore.push(data);
+        n = data.name;
+
 
         if (!check) {
             return res.send("User not found");
@@ -121,7 +123,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/data', async (req, res) => {
-    let playerName=dataStore[0].name
+    let playerName=n
     const score = req.body.score;
     
     try {
@@ -138,7 +140,7 @@ app.post('/data', async (req, res) => {
 
         // Save the updated player document
         await player.save();
-        dataStore.pop();
+       
         res.status(200).json({ message: 'Score updated successfully' });
     } catch (err) {
         console.error('Error updating score:', err);
